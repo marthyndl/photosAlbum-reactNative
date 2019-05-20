@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StatusBar, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { getAlbums, setImages } from '../actions/Albums';
+import { getAlbums, setImages } from '../actions/albumsPhotos';
 import Card from '../components/Card';
 
 class Home extends Component {
