@@ -7,12 +7,35 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: ''
+    };
+  }
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/photos')
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          data: responseJson
+        });
+      })
+      .catch(err => {
+        this.setState({ data: err });
+      });
+  }
   render() {
+    if (this.state.data) {
+      var res = this.state.data.map(item => {
+        if (item.id === 1) {
+          return <Text key={item.id}>{item.title}</Text>;
+        }
+      });
+    }
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native! Test Media Monks</Text>
-        <Text style={styles.instructions}>I'm Martin Daniel Lopez</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text>{this.state.data ? res : 'Loading!!! ...'}</Text>
       </View>
     );
   }
