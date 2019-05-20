@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StatusBar, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { getAlbums, setImages } from '../actions/Albums';
+import Card from '../components/Card';
 
 class Home extends Component {
   static navigationOptions = {
@@ -21,7 +22,17 @@ class Home extends Component {
         <FlatList
           data={this.props.albums}
           keyExtractor={item => `${item.id}`}
-          renderItem={({ item }) => <Text>{item}</Text>}
+          renderItem={({ item }) => (
+            <Card
+              {...item}
+              onPress={() => {
+                this.props.dispatch(setImages(item.images));
+                this.props.navigation.navigate('Images', {
+                  title: item.title
+                });
+              }}
+            />
+          )}
         />
       </View>
     );
